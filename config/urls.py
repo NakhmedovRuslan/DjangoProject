@@ -23,6 +23,4 @@ from catalog.views import contact_view, submit_form
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("catalog/", include("catalog.urls", namespace="catalog")),
-    path("contacts/", contact_view, name="contacts"),
-    path("submit_form/", submit_form, name="submit_form"),
 ]

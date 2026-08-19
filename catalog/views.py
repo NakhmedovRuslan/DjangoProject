@@ -22,11 +22,6 @@ def submit_form(request):
         return HttpResponse(html_content)
 
     else:
-        html_content = """
-        <html>
-        <body>
-        <h1>Спасибо за обратную связь!</h1>
-        </body>
-        </html>
-        """
-        return HttpResponse(html_content)
+        return render(request, 'contacts.html')
+
+
