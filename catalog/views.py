@@ -47,7 +47,7 @@ def home_view(request):
     return render(request, "main.html", {"products": products})
 
 
-def product_detail(request, product_id):
-    product = get_object_or_404(Product, id=product_id)
+def product_detail(request, pk):
+    product = get_object_or_404(Product, id=pk)
     context = {"product": product}
     return render(request, "product_detail.html", context)

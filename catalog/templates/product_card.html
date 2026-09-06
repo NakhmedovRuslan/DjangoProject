@@ -19,7 +19,7 @@
                 {{ product.description|truncatechars:35 }}
             </p>
 
-            <a href="{% url 'catalog:product_detail' product.id %}" class="btn btn-outline-primary w-100">
+            <a href="{% url 'catalog:product_detail' pk=product.id %}" class="btn btn-outline-primary w-100">
                 Подробнее
             </a>
         </div>
