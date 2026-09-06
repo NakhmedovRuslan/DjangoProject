@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load my_tags %}
+
+{% block title %}
+Карточка товара
+{% endblock %}
+
+
+{% block content %}
+<div class="col-3 m-5">
+    <div class="card w-100">
+        <img src="{{ product.image|media_filter }}"
+             class="card-img-top w-100"
+             style="height: 200px; object-fit: contain;"
+             alt="{{ product.name }}">
+        <div class="card-header text-center fw-bold">
+            {{ product.name }}
+        </div>
+
+        <div class="card-body">
+            <h2 class="card-title text-center">
+                {{ product.price }} ₽
+            </h2>
+
+            <p class="card-text">
+                {{ product.description }}
+            </p>
+
+            <a href="#" class="btn btn-outline-primary w-100">
+                Купить
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
