@@ -8,23 +8,15 @@ from catalog.models import Product
 def index(request):
     return render(request, "base.html")
 
-
-def home_view(request):
-    return render(request, "main.html")
-
-
 def categories(request):
     return render(request, "categories.html")
-
 
 def choose_category(request):
     return render(request, "choose_category.html")
 
-
 def contacts(request):
     if request.method == "GET":
         return render(request, "contacts.html")
-
 
 def submit_form(request):
     if request.method == "POST":
@@ -40,12 +32,10 @@ def submit_form(request):
     else:
         return render(request, "contacts.html")
 
-
 def home_view(request):
     products = Product.objects.all()
 
     return render(request, "main.html", {"products": products})
-
 
 def product_detail(request, pk):
     product = get_object_or_404(Product, id=pk)
