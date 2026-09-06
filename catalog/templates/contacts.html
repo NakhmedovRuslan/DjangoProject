@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Категории{% endblock %}
+
+{% block content %}
+<h1 class="text-center mt-5 pt-4">Контакты</h1>
+
+<div class="row justify-content-center">
+    <div class="col-4 m-4">
+        <div class="card">
+            <div class="card-body">
+                <label for="exampleFormControlTextarea1" class="form-label fw-medium">Имя</label>
+                <input type="text" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                <label for="exampleFormControlInput1" class="form-label fw-medium">Почта</label>
+                <div class="input-group mb-3">
+
+                    <span class="input-group-text fw-medium" id="basic-addon1">@</span>
+                    <input type="email" class="form-control" id="exampleFormControlInput1"
+                           placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label fw-medium">Сообщение</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Отправить</button>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-5 m-4">
+        <h4>Наши контакты</h4>
+        <div class="card border border-0">
+            <p class="text-justify">
+                Утро начинается с чашки ароматного кофе и первых солнечных лучей, пробивающихся сквозь занавески.
+                День обещает быть насыщенным: впереди новые встречи, интересные разговоры и маленькие победы. Пусть
+                всё задуманное легко воплощается в жизнь, а рядом будут люди, с которыми тепло и спокойно.
+                Вдохновляйтесь мелочами, в них прячется настоящее счастье.<br>Пусть этот день станет ступенькой к
+                чему‑то большому и важному.<br><br>Хорошего дня и отличного настроения!
+            </p>
+        </div>
+    </div>
+
+
+</div>
+{% endblock %}
