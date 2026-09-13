@@ -6,11 +6,15 @@
 
 <h1 class="text-center mt-5 pt-4">Главная</h1>
 <p class="text-center">Вы находитесь на сайте, предназначенном для продажи товаров.</p>
-
+<div class="text-left mb-4">
+        <a href="{% url 'catalog:product_create' %}" class="btn btn-primary">
+            Добавить товар
+        </a>
+    </div>
 <div class="row justify-content-center">
-    {% for product in products %}
+    {% for product in object_list %}
 
-        {% include 'product_card.html' %}
+        {% include 'catalog/product_card.html' %}
 
     {% endfor %}
 

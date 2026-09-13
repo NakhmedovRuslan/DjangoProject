@@ -1,5 +1,12 @@
+{% extends 'base.html' %}
 {% load my_tags %}
 
+{% block title %}
+{{ product.name }}
+{% endblock %}
+
+
+{% block content %}
 <div class="col-3 m-5">
     <div class="card w-100">
         <img src="{{ product.image|media_filter }}"
@@ -16,12 +23,17 @@
             </h2>
 
             <p class="card-text">
-                {{ product.description|truncatechars:35 }}
+                {{ product.description }}
             </p>
 
-            <a href="{% url 'catalog:product_detail' pk=product.id %}" class="btn btn-outline-primary w-100">
-                Подробнее
+            <a href="#" class="btn btn-outline-primary w-100">
+                Купить
+            </a>
+
+            <a href="{% url 'catalog:index' %}" class="btn btn-outline-primary mt-3">
+                Назад
             </a>
         </div>
     </div>
 </div>
+{% endblock %}

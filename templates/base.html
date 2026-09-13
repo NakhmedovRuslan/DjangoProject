@@ -51,17 +51,20 @@
         </nav>
 
         <div class="navbar-nav my-2">
-            <a class="nav-link bg-primary text-white ps-3 active rounded-3" href="{% url 'catalog:home' %}">
+            <a class="nav-link bg-primary text-white ps-3 active rounded-3" href="{% url 'catalog:index' %}">
                 <i class="bi bi-house me-2"></i>Главная
             </a>
-            <a class="nav-link text-white ps-3" href="{% url 'catalog:categories' %}">
+            <a class="nav-link text-white ps-3" href="{% url 'catalog:category_list' %}">
                 <i class="bi bi-speedometer2 me-2"></i>Категории
             </a>
             <a class="nav-link text-white ps-3" href="#">
                 <i class="bi bi-calculator me-2"></i>Заказы
             </a>
+            <a class="nav-link text-white ps-3" href="{% url 'blog:blog_list' %}">
+                <i class="bi bi-journal-text me-2"></i>Блог
+            </a>
             <a class="nav-link text-white ps-3" href="{% url 'catalog:contacts' %}">
-                <i class="bi bi-people-circle me-2"></i>Контакты
+                <i class="bi bi-person-circle me-2"></i>Контакты
             </a>
         </div>
 
