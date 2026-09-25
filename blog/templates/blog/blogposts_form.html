@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if object %}Редактирование записи{% else %}Создание записи{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom">
+                    <h4 class="mb-0">
+                        {% if object %}Редактирование записи{% else %}Новая запись{% endif %}
+                    </h4>
+                </div>
+
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {# Общие ошибки формы #}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                {{ form.non_field_errors }}
+                            </div>
+                        {% endif %}
+
+                        {# title #}
+                        <div class="mb-3">
+                            <label for="{{ form.title.id_for_label }}" class="form-label">
+                                {{ form.title.label }} <span class="text-danger">*</span>
+                            </label>
+                            <input type="text"
+                                   name="{{ form.title.name }}"
+                                   id="{{ form.title.id_for_label }}"
+                                   class="form-control {% if form.title.errors %}is-invalid{% endif %}"
+                                   placeholder="Введите заголовок записи"
+                                   value="{{ form.title.value|default:'' }}">
+                            {% if form.title.errors %}
+                                <div class="invalid-feedback">{{ form.title.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        {# content #}
+                        <div class="mb-3">
+                            <label for="{{ form.content.id_for_label }}" class="form-label">
+                                {{ form.content.label }} <span class="text-danger">*</span>
+                            </label>
+                            <textarea name="{{ form.content.name }}"
+                                      id="{{ form.content.id_for_label }}"
+                                      class="form-control {% if form.content.errors %}is-invalid{% endif %}"
+                                      rows="6"
+                                      placeholder="Напишите текст записи…">{{ form.content.value|default:'' }}</textarea>
+                            {% if form.content.errors %}
+                                <div class="invalid-feedback">{{ form.content.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        {# preview #}
+                        <div class="mb-3">
+                            <label for="{{ form.preview.id_for_label }}" class="form-label">
+                                {{ form.preview.label }}
+                                {% if not object %}<span class="text-danger">*</span>{% endif %}
+                            </label>
+                            <input type="file"
+                                   name="{{ form.preview.name }}"
+                                   id="{{ form.preview.id_for_label }}"
+                                   class="form-control {% if form.preview.errors %}is-invalid{% endif %}">
+                            {% if form.preview.errors %}
+                                <div class="invalid-feedback">{{ form.preview.errors }}</div>
+                            {% endif %}
+                        </div>
+
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox"
+                                   name="{{ form.is_published.name }}"
+                                   id="{{ form.is_published.id_for_label }}"
+                                   class="form-check-input"
+                                   {% if form.is_published.value %}checked{% endif %}>
+                            <label for="{{ form.is_published.id_for_label }}"
+                                   class="form-check-label">
+                                {{ form.is_published.label|default:'Опубликовать' }}
+                            </label>
+                            {% if form.is_published.errors %}
+                                <div class="text-danger small">{{ form.is_published.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'blog:blog_list' %}" class="btn btn-outline-primary">
+                                Отмена
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                {% if object %}Сохранить изменения{% else %}Создать запись{% endif %}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}
