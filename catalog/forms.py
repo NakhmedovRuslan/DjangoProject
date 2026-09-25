@@ -2,7 +2,7 @@ from django import forms
 from .models import Product, Category
 from django.core.exceptions import ValidationError
 
-forbidden_words = [
+FORBIDDEN_WORDS = [
     "казино", "криптовалюта", "крипта", "биржа",
     "дешево", "бесплатно", "обман", "полиция", "радар",]
 
@@ -16,7 +16,7 @@ class ProductForm(forms.ModelForm):
         """Проверка наличия запрещенных слов в названии"""
         name = self.cleaned_data["name"]
 
-        for word in forbidden_words:
+        for word in FORBIDDEN_WORDS:
             if word in name.lower():
                 raise ValidationError(
                     "В названии используются запрещенные слова"
@@ -28,7 +28,7 @@ class ProductForm(forms.ModelForm):
         """Проверка наличия запрещенных слов в описании"""
         description = self.cleaned_data["description"]
 
-        for word in forbidden_words:
+        for word in FORBIDDEN_WORDS:
             if word in description.lower():
                 raise ValidationError(
                     "В описании используются запрещенные слова"
