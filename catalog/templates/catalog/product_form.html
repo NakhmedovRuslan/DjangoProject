@@ -3,6 +3,7 @@
 {% block title %}Создание товара{% endblock %}
 
 {% block content %}
+
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
@@ -13,91 +14,29 @@
                 </div>
 
                 <div class="card-body">
+
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-
-                        <div class="mb-3">
-                            <label for="{{ form.name.id_for_label }}" class="form-label">
-                                {{ form.name.label }} <span class="text-danger">*</span>
-                            </label>
-                            <input type="text"
-                                   name="{{ form.name.name }}"
-                                   id="{{ form.name.id_for_label }}"
-                                   class="form-control"
-                                   placeholder="Введите название товара"
-                                   value="{{ form.name.value|default:'' }}">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="{{ form.description.id_for_label }}" class="form-label">
-                                {{ form.description.label }} <span class="text-danger">*</span>
-                            </label>
-                            <textarea name="{{ form.description.name }}"
-                                      id="{{ form.description.id_for_label }}"
-                                      class="form-control"
-                                      rows="6"
-                                      placeholder="Напишите описание товара…">{{ form.description.value|default:'' }}</textarea>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="{{ form.price.id_for_label }}" class="form-label">
-                                Цена <span class="text-danger">*</span>
-                            </label>
-                            <input type="number"
-                                   step="0.01"
-                                   min="0"
-                                   name="{{ form.price.name }}"
-                                   id="{{ form.price.id_for_label }}"
-                                   class="form-control"
-                                   placeholder="0.00"
-                                   value="{{ form.price.value|default:'' }}">
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="{{ form.category.id_for_label }}" class="form-label">
-                                Категория <span class="text-danger">*</span>
-                            </label>
-                            <select name="{{ form.category.name }}"
-                                    id="{{ form.category.id_for_label }}"
-                                    class="form-select">
-                                <option value="">Выберите категорию:</option>
-
-                                {% for cat in form.category.field.queryset %}
-                                    <option value="{{ cat.pk }}"
-                                            {% if form.category.value == cat.pk %}selected{% endif %}>
-                                        {{ cat.name }}
-                                    </option>
-                                {% endfor %}
-                            </select>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="{{ form.image.id_for_label }}" class="form-label">
-                                {{ form.image.label }} <span class="text-danger">*</span>
-                            </label>
-                            <input type="file"
-                                   name="{{ form.image.name }}"
-                                   id="{{ form.image.id_for_label }}"
-                                   class="form-control">
-                        </div>
+                        {{ form.non_field_errors }}
+                        {{ form.as_p }}
 
                         <div class="d-flex justify-content-between align-items-center">
                             <a href="{% url 'catalog:index' %}" class="btn btn-outline-primary">
                                 Отмена
                             </a>
+
                             <button type="submit" class="btn btn-primary px-4">
-                                {% if object %}
-                                Сохранить изменения
-                                {% else %}
                                 Создать товар
-                                {% endif %}
                             </button>
                         </div>
+
                     </form>
+
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+
 {% endblock %}

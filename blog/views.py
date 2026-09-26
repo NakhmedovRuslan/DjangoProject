@@ -6,6 +6,7 @@ from .models import BlogPosts
 
 
 class BlogPostsListView(ListView):
+    """Контроллер просмотра списка блогов"""
     model = BlogPosts
     template_name = "blogposts_list.html"
 
@@ -15,6 +16,7 @@ class BlogPostsListView(ListView):
 
 
 class BlogPostsDetailView(DetailView):
+    """Контроллер подробного чтения конкретного блога с счётчиком просмотра"""
     model = BlogPosts
     template_name = "blog/blogposts_detail.html"
     context_object_name = "blogposts"
@@ -27,6 +29,7 @@ class BlogPostsDetailView(DetailView):
 
 
 class BlogPostsCreateView(CreateView):
+    """Контроллер создания нового блога"""
     model = BlogPosts
     fields = ["title", "content", "preview", "is_published"]
     template_name = "blog/blogposts_form.html"
@@ -34,6 +37,7 @@ class BlogPostsCreateView(CreateView):
 
 
 class BlogPostsUpdateView(UpdateView):
+    """Контроллер редактирования ранее созданного блога"""
     model = BlogPosts
     fields = ["title", "content", "preview", "is_published"]
     template_name = "blog/blogposts_form.html"
@@ -44,6 +48,7 @@ class BlogPostsUpdateView(UpdateView):
 
 
 class BlogPostsDeleteView(DeleteView):
+    """Контроллер удаления ранее созданного блога"""
     model = BlogPosts
     template_name = "blog/blogposts_confirm_delete.html"
     success_url = reverse_lazy("blog:blog_list")
