@@ -19,13 +19,14 @@
             <p class="card-text">
                 {{ product.description|truncatechars:35 }}
             </p>
-
+            {% if user.is_authenticated %}
             <a href="{% url 'catalog:product_detail' pk=product.pk %}"
                class="btn btn-outline-primary mt-auto">
                 Подробнее
             </a>
+            {% endif %}
         </div>
-
+            {% if user.is_authenticated %}
         <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
             <a href="{% url 'catalog:product_update' pk=product.pk %}"
                class="btn btn-outline-primary">
@@ -36,5 +37,6 @@
                 Удалить
             </a>
         </div>
+        {% endif %}
     </div>
 </div>
