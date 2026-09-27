@@ -1,5 +1,5 @@
 from django import forms
-from .models import Product, Category
+from .models import Product
 from django.core.exceptions import ValidationError
 
 FORBIDDEN_WORDS = [
