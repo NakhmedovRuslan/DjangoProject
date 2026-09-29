@@ -4,7 +4,6 @@
 
 {% block content %}
 
-{% if user.is_authenticated %}
 <h1 class="text-center mt-5 pt-4">Категории</h1>
 
 <div class="row justify-content-center g-5 px-5 m-5">
@@ -28,10 +27,4 @@
         <p class="text-center">Категорий пока нет.</p>
     {% endfor %}
 </div>
-{% else %}
-    <div class="text-center mt-5 pt-4">
-        <h1>Для просмотра списка категорий необходимо авторизоваться</h1>
-        <a href="{% url 'users:login' %}" class="btn btn-primary mt-3">Войти</a>
-    </div>
-{% endif %}
 {% endblock %}

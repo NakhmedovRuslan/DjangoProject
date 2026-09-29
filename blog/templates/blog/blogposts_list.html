@@ -35,12 +35,10 @@
                         <p class="card-text">
                             {{ post.content|truncatechars:50 }}
                         </p>
-                        {% if user.is_authenticated %}
                         <a href="{% url 'blog:blog_detail' pk=post.pk %}"
                            class="btn btn-outline-primary mt-auto">
                             Подробнее
                         </a>
-                        {% endif %}
                     </div>
 
                     {% if user.is_authenticated %}

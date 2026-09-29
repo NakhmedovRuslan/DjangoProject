@@ -1,4 +1,6 @@
 import os
+
+from django.contrib.auth.views import LoginView
 from dotenv import load_dotenv
 
 
@@ -7,7 +9,7 @@ load_dotenv(override=True)
 
 from django.urls import reverse_lazy
 from django.views.generic.edit import CreateView, FormView
-from .forms import CustomUserCreationForm
+from .forms import CustomUserCreationForm, CustomAuthenticationForm
 from django.core.mail import send_mail
 
 class RegisterView(CreateView):
@@ -27,6 +29,9 @@ class RegisterView(CreateView):
         recipient_list = [user_email,]
         send_mail(subject, message, from_email, recipient_list)
 
-class LoginView(FormView):
-    template_name = 'users/login.html'
-    form_class = CustomUserCreationForm
+
+class CustomLoginView(LoginView):
+    template_name = "users/login.html"
+    authentication_form = CustomAuthenticationForm
+    redirect_authenticated_user = True
+    success_url = reverse_lazy("catalog:index")

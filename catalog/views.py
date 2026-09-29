@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -30,7 +31,7 @@ class SubmitFormView(View):
         return HttpResponse(html_content)
 
 
-class CategoryListView(ListView):
+class CategoryListView(LoginRequiredMixin, ListView):
     """Контроллер списка категорий (просмотр)"""
     model = Category
     template_name = "catalog/categories.html"
@@ -44,14 +45,14 @@ class ProductListView(ListView):
     context_object_name = "products"
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     """Контроллер подробного просмотра товара"""
     model = Product
     template_name = "catalog/product_detail.html"
     context_object_name = "product"
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """Контроллер создания нового товара"""
     model = Product
     template_name = "catalog/product_form.html"
@@ -59,7 +60,7 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy("catalog:index")
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """Контроллер редактирования ранее созданного товара"""
     model = Product
     template_name = "catalog/product_form.html"
@@ -71,7 +72,7 @@ class ProductUpdateView(UpdateView):
         return reverse_lazy("catalog:product_detail", args={self.kwargs["pk"]})
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """Контроллер удаления ранее созданного товара"""
     model = Product
     template_name = "catalog/product_confirm_delete.html"

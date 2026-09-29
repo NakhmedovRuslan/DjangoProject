@@ -4,7 +4,6 @@
 {% block title %}{{ blogposts.title }}{% endblock %}
 
 {% block content %}
-{% if user.is_authenticated %}
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -37,10 +36,4 @@
         </div>
     </div>
 </div>
-{% else %}
-    <div class="text-center mt-5 pt-4">
-        <h1>Для просмотра подробной информации необходимо авторизоваться</h1>
-        <a href="{% url 'users:login' %}" class="btn btn-primary mt-3">Войти</a>
-    </div>
-{% endif %}
 {% endblock %}

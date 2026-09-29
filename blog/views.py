@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
@@ -15,7 +16,7 @@ class BlogPostsListView(ListView):
         return BlogPosts.objects.filter(is_published=True)
 
 
-class BlogPostsDetailView(DetailView):
+class BlogPostsDetailView(LoginRequiredMixin, DetailView):
     """Контроллер подробного чтения конкретного блога с счётчиком просмотра"""
     model = BlogPosts
     template_name = "blog/blogposts_detail.html"
@@ -28,7 +29,7 @@ class BlogPostsDetailView(DetailView):
         return self.object
 
 
-class BlogPostsCreateView(CreateView):
+class BlogPostsCreateView(LoginRequiredMixin, CreateView):
     """Контроллер создания нового блога"""
     model = BlogPosts
     fields = ["title", "content", "preview", "is_published"]
@@ -36,7 +37,7 @@ class BlogPostsCreateView(CreateView):
     success_url = reverse_lazy("blog:blog_list")
 
 
-class BlogPostsUpdateView(UpdateView):
+class BlogPostsUpdateView(LoginRequiredMixin, UpdateView):
     """Контроллер редактирования ранее созданного блога"""
     model = BlogPosts
     fields = ["title", "content", "preview", "is_published"]
@@ -47,7 +48,7 @@ class BlogPostsUpdateView(UpdateView):
         return reverse_lazy("blog:blog_detail", args={self.kwargs["pk"]})
 
 
-class BlogPostsDeleteView(DeleteView):
+class BlogPostsDeleteView(LoginRequiredMixin, DeleteView):
     """Контроллер удаления ранее созданного блога"""
     model = BlogPosts
     template_name = "blog/blogposts_confirm_delete.html"
