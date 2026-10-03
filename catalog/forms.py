@@ -93,3 +93,9 @@ class ProductForm(forms.ModelForm):
         self.fields['image'].widget.attrs.update({
             'class': 'form-control'
         })
+
+
+class ProductModeratorForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ["name", "description", "price", "category", "image"]

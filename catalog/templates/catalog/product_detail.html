@@ -33,6 +33,15 @@
             <a href="{% url 'catalog:index' %}" class="btn btn-outline-primary mt-3">
                 Назад
             </a>
+            {% if perms.catalog.can_unpublish_product and product.is_published %}
+            <form method="post" action="{% url 'catalog:product_unpublish' pk=product.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning w-100 mt-2">
+                    Отменить публикацию
+                </button>
+            </form>
+            {% endif %}
+
         </div>
     </div>
 </div>
