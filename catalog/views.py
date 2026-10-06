@@ -1,12 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
 
-from catalog.forms import ProductForm
+from catalog.forms import ProductForm, ProductModeratorForm
 from catalog.models import Category, Product
 
 
@@ -59,22 +60,53 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     form_class = ProductForm
     success_url = reverse_lazy("catalog:index")
 
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
-    """Контроллер редактирования ранее созданного товара"""
+    """Контроллер редактирования товара, права только у владельца"""
     model = Product
     template_name = "catalog/product_form.html"
     form_class = ProductForm
     context_object_name = "product"
-    success_url = reverse_lazy("catalog:index")
 
     def get_success_url(self):
-        return reverse_lazy("catalog:product_detail", args={self.kwargs["pk"]})
+        return reverse_lazy("catalog:product_detail", args=[self.kwargs["pk"]])
+
+    def dispatch(self, request, *args, **kwargs):
+        product = self.get_object()
+        if product.owner != request.user and not request.user.is_superuser:
+            raise PermissionDenied("Вы не владелец этого товара")
+        return super().dispatch(request, *args, **kwargs)
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
-    """Контроллер удаления ранее созданного товара"""
+    """Контроллер удаления товара, только владелец или модератор"""
     model = Product
     template_name = "catalog/product_confirm_delete.html"
     context_object_name = "product"
     success_url = reverse_lazy("catalog:index")
+
+    def dispatch(self, request, *args, **kwargs):
+        product = self.get_object()
+        is_owner = product.owner == request.user
+        is_moderator = request.user.has_perm("catalog.delete_product")
+
+        if not (is_owner or is_moderator):
+            raise PermissionDenied("Вы не имеете доступ (не владелец и не модератор)")
+        return super().dispatch(request, *args, **kwargs)
+
+
+class ProductUnpublishView(LoginRequiredMixin, View):
+    """Отмена публикации (только для модератора)"""
+
+    def post(self, request, pk):
+        if not request.user.has_perm("catalog.can_unpublish_product"):
+            raise PermissionDenied("Нет права can_unpublish_product")
+
+        product = get_object_or_404(Product, pk=pk)
+        product.is_published = False
+        product.save()
+        return redirect("catalog:product_detail", pk=pk)

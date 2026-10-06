@@ -24,17 +24,24 @@
                 Подробнее
             </a>
         </div>
-            {% if user.is_authenticated %}
+
         <div class="card-footer bg-white border-top-0 d-flex justify-content-between">
-            <a href="{% url 'catalog:product_update' pk=product.pk %}"
-               class="btn btn-outline-primary">
-                Редактировать
-            </a>
-            <a href="{% url 'catalog:product_delete' pk=product.pk %}"
-               class="btn btn-outline-danger">
-                Удалить
-            </a>
+
+            {% if user == product.owner or user.is_superuser %}
+                <a href="{% url 'catalog:product_update' pk=product.pk %}"
+                   class="btn btn-outline-primary">
+                    Редактировать
+                </a>
+            {% endif %}
+
+            {% if user == product.owner or perms.catalog.delete_product %}
+                <a href="{% url 'catalog:product_delete' pk=product.pk %}"
+                   class="btn btn-outline-danger">
+                    Удалить
+                </a>
+            {% endif %}
+
         </div>
-        {% endif %}
+
     </div>
 </div>
