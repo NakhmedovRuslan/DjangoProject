@@ -17,7 +17,7 @@
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <div>
                         <a class="btn btn-outline-primary w-100"
-                           href="#">Смотреть товары</a>
+                           href="{% url 'catalog:products_filter_by_category' category_id=category.id %}">Смотреть товары</a>
                     </div>
 
                 </div>
