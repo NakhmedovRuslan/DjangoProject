@@ -3,13 +3,13 @@ name = "djangoproject"
 version = "0.1.0"
 description = ""
 authors = [
-    {name = "Ruslan Nakhmedov",email = "ruslan-nahmedov@mail.ru"}
+    {name = "Ruslan Nakhmedov", email = "ruslan-nahmedov@mail.ru"}
 ]
 requires-python = "^3.14"
 dependencies = [
-    "django (>=6.1,<7.0)"
+    "django (>=6.1,<7.0)",
+    "django-redis (>=7.0.0,<8.0.0)"
 ]
-
 
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
@@ -28,3 +28,6 @@ dev = [
     "ipython (>=9.17.0,<10.0.0)",
     "redis (>=8.1.0,<9.0.0)"
 ]
+
+[tool.poetry]
+package-mode = false
