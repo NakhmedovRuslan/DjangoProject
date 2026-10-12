@@ -7,9 +7,9 @@ from django.views import View
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   TemplateView, UpdateView)
 
-from catalog.forms import ProductForm, ProductModeratorForm
+from catalog.forms import ProductForm
 from catalog.models import Category, Product
-
+from catalog.services import get_products_from_cache, filter_products_by_category
 
 class IndexView(TemplateView):
     """контроллер базового шаблона"""
@@ -45,6 +45,9 @@ class ProductListView(ListView):
     template_name = "catalog/main.html"
     context_object_name = "products"
 
+    def get_queryset(self):
+        """Метод, который определяет, какие именно объекты будут получены и переданы в шаблон для отображения"""
+        return get_products_from_cache()
 
 class ProductDetailView(LoginRequiredMixin, DetailView):
     """Контроллер подробного просмотра товара"""
@@ -110,3 +113,22 @@ class ProductUnpublishView(LoginRequiredMixin, View):
         product.is_published = False
         product.save()
         return redirect("catalog:product_detail", pk=pk)
+
+
+class ProductFilterByCategoryView(LoginRequiredMixin, ListView):
+    """Контроллер фильтра списка товаров по категориям"""
+    model = Product
+    template_name = "catalog/choosen_category.html"
+    context_object_name = "products"
+
+    def get_queryset(self):
+        return filter_products_by_category(category_id=self.kwargs["category_id"])
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        category = Category.objects.get(pk=self.kwargs["category_id"])
+        context["category"] = category
+        return context
+
+
+
