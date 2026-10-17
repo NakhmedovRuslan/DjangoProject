@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Контакты{% endblock %}
+
+{% block content %}
+<h1 class="text-center mt-5 pt-4">Контакты</h1>
+
+<div class="row justify-content-center">
+
+    <div class="col-4 m-4">
+        <div class="card">
+            <div class="card-body">
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <label for="name" class="form-label fw-medium">Имя</label>
+                    <input type="text"
+                           name="name"
+                           id="name"
+                           class="form-control"
+                           aria-label="Username">
+
+                    <label for="email" class="form-label fw-medium mt-3">Почта</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text fw-medium" id="basic-addon1">@</span>
+                        <input type="email"
+                               name="email"
+                               id="email"
+                               class="form-control"
+                               placeholder="name@example.com"
+                               aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="message" class="form-label fw-medium">Сообщение</label>
+                        <textarea name="message"
+                                  id="message"
+                                  class="form-control"
+                                  rows="3"></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-5 m-4">
+        <h4>Наши контакты</h4>
+        <div class="card border border-0">
+            <p class="text-justify">
+                Утро начинается с чашки ароматного кофе и первых солнечных лучей, пробивающихся сквозь занавески.
+                День обещает быть насыщенным: впереди новые встречи, интересные разговоры и маленькие победы. Пусть
+                всё задуманное легко воплощается в жизнь, а рядом будут люди, с которыми тепло и спокойно.
+                Вдохновляйтесь мелочами, в них прячется настоящее счастье.<br>Пусть этот день станет ступенькой к
+                чему‑то большому и важному.<br><br>Хорошего дня и отличного настроения!
+            </p>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

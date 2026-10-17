@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+
+{% block title %}
+{{ product.name }}
+{% endblock %}
+
+
+{% block content %}
+<div class="col-3 m-5">
+    <div class="card w-100">
+        <img src="{{ product.image|media_filter }}"
+             class="card-img-top w-100"
+             style="height: 200px; object-fit: contain;"
+             alt="{{ product.name }}">
+        <div class="card-header text-center fw-bold">
+            {{ product.name }}
+        </div>
+
+        <div class="card-body">
+            <h2 class="card-title text-center">
+                {{ product.price }} ₽
+            </h2>
+
+            <p class="card-text">
+                {{ product.description }}
+            </p>
+
+            <a href="#" class="btn btn-outline-primary w-100">
+                Купить
+            </a>
+
+            <a href="{% url 'catalog:index' %}" class="btn btn-outline-primary mt-3">
+                Назад
+            </a>
+            {% if perms.catalog.can_unpublish_product and product.is_published %}
+            <form method="post" action="{% url 'catalog:product_unpublish' pk=product.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-warning w-100 mt-2">
+                    Отменить публикацию
+                </button>
+            </form>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+{% endblock %}
